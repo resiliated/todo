@@ -1,8 +1,7 @@
-package todo.todo;
+package todo.repository;
 
 import org.springframework.data.repository.CrudRepository;
-
-import java.util.List;
+import todo.entity.Todo;
 
 
 public interface TodoRepository extends CrudRepository<Todo, Integer> {

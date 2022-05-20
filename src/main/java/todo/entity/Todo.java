@@ -1,13 +1,18 @@
-package todo.todo;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+package todo.entity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity // This tells Hibernate to make a table out of this class
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Todo {
-
         @Id
         @GeneratedValue(strategy=GenerationType.AUTO)
         private Integer id;
@@ -18,7 +23,14 @@ public class Todo {
 
         private Date close;
 
-        public Integer getId() {
+        @Enumerated(EnumType.STRING)
+        private State state;
+
+        @OneToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "type_id", referencedColumnName = "id")
+        private Type type;
+
+        /*public Integer getId() {
             return id;
         }
 
@@ -48,5 +60,5 @@ public class Todo {
 
         public void setClose(Date close) {
             this.close = close;
-        }
+        }*/
 }
