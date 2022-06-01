@@ -6,7 +6,7 @@ import todo.model.Todo;
 import todo.model.Type;
 import todo.repository.TodoRepository;
 import todo.repository.TypeRepository;
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("todo")
 public class TodoController {

@@ -17,7 +17,7 @@ public class Todo {
         @Id
         @GeneratedValue(strategy=GenerationType.AUTO)
         private Integer id;
-
+        private String title;
         private String content;
 
         @CreatedDate
