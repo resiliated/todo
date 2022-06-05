@@ -38,7 +38,7 @@ public class TodoController {
         });
     }
 
-    @PostMapping // Map ONLY POST Requests
+    /*@PostMapping // Map ONLY POST Requests
     public @ResponseBody Todo addNewTodo (@RequestBody Todo newtodo) {
         if(newtodo.getType().getId() != null){ //Create with an existing type
             Type type = typeRepository.findById(newtodo.getType().getId()).orElseThrow();
@@ -49,6 +49,17 @@ public class TodoController {
             newtodo.setType(type);
         }
         return todoRepository.save(newtodo);
+    }*/
+
+    /*
+    TODO: remove ? temp to create random todo
+     */
+    @PostMapping // Map ONLY POST Requests
+    public @ResponseBody Todo createTodo () {
+        Todo newTodo = new Todo();
+        newTodo.setTitle("caca");
+        newTodo.setContent("pipi");
+        return todoRepository.save(newTodo);
     }
 
     @GetMapping(path="/{id}")
