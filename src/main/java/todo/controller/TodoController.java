@@ -23,18 +23,25 @@ public class TodoController {
         todoRepository.deleteById(id);
     }
 
-    @PutMapping(path="/{id}")
-    public @ResponseBody Todo modifyTodo(@PathVariable Integer id, @RequestBody Todo newtodo){
-        return todoRepository.findById(id).map(todo ->{
+    @PutMapping
+    public @ResponseBody Todo updateTodo(@RequestBody Todo todoToCreateOrUpdate){
+        if(todoToCreateOrUpdate.getId() == null){
+            Todo newTodo = new Todo();
+            newTodo.setTitle(todoToCreateOrUpdate.getTitle());
+            newTodo.setContent(todoToCreateOrUpdate.getContent());
+            return todoRepository.save(newTodo);
+        }
+        return todoRepository.findById(todoToCreateOrUpdate.getId()).map(todo ->{
             //todo.setCreation(newtodo.getCreation());
-            todo.setContent(newtodo.getContent());
+            todo.setContent(todoToCreateOrUpdate.getContent());
+            todo.setTitle(todoToCreateOrUpdate.getTitle());
             //todo.setClose(newtodo.getClose());
-            todo.setState(newtodo.getState());
-            todo.setType(newtodo.getType());
+            todo.setState(todoToCreateOrUpdate.getState());
+            todo.setType(todoToCreateOrUpdate.getType());
 
             return todoRepository.save(todo);
         }).orElseGet(() -> {
-            return todoRepository.save(newtodo);
+            return todoRepository.save(todoToCreateOrUpdate);
         });
     }
 
@@ -55,10 +62,10 @@ public class TodoController {
     TODO: remove ? temp to create random todo
      */
     @PostMapping // Map ONLY POST Requests
-    public @ResponseBody Todo createTodo () {
+    public @ResponseBody Todo createTodo (@RequestBody Todo todoToCreate) {
         Todo newTodo = new Todo();
-        newTodo.setTitle("caca");
-        newTodo.setContent("pipi");
+        newTodo.setTitle(todoToCreate.getTitle());
+        newTodo.setContent(todoToCreate.getContent());
         return todoRepository.save(newTodo);
     }
 
