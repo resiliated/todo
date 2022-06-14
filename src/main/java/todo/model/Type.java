@@ -17,4 +17,8 @@ public class Type {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
     private String entitled;
+
+    public Type(String entitled){
+        this.entitled = entitled;
+    }
 }
