@@ -24,14 +24,19 @@ public class TodoController {
 
     @DeleteMapping(path="/{id}")
     public @ResponseBody void removeTodo(@PathVariable Integer id){
-        todoRepository.deleteById(id);
+        todoRepository.findById(id).map(todo -> {
+            todo.setDeleted(true);
+            return todoRepository.save(todo);
+        });
     }
 
     @PutMapping
     public @ResponseBody Todo updateTodo(@RequestBody Todo todoToCreateOrUpdate){
         if(todoToCreateOrUpdate.getId() == null){
             Todo newTodo = new Todo();
+
             newTodo.setTitle(todoToCreateOrUpdate.getTitle());
+            //newTodo.getType().setId(todoToCreateOrUpdate.getType().getId());
             newTodo.setContent(todoToCreateOrUpdate.getContent());
             return todoRepository.save(newTodo);
         }
@@ -45,8 +50,8 @@ public class TodoController {
             todo.setTitle(todoToCreateOrUpdate.getTitle());
             todo.setClose(todoToCreateOrUpdate.getClose());
             todo.setState(todoToCreateOrUpdate.getState());
-            todo.setType(todoToCreateOrUpdate.getType());
-
+            //todo.setType(todoToCreateOrUpdate.getType());
+            //logger.info("todo type :" + todo.getType().getId());
             return todoRepository.save(todo);
         }).orElseGet(() -> {
             return todoRepository.save(todoToCreateOrUpdate);
@@ -86,6 +91,7 @@ public class TodoController {
     @GetMapping
     public @ResponseBody Iterable<Todo> getAllTodos() {
         // This returns a JSON or XML with the user
-        return todoRepository.findAll();
+        //return todoRepository.findAll();
+        return todoRepository.findByDeletedFalse();
     }
 }

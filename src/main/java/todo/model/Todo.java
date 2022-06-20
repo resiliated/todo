@@ -31,4 +31,6 @@ public class Todo {
         @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "type_id", referencedColumnName = "id")
         private Type type;
+
+        private boolean deleted = false;
 }
