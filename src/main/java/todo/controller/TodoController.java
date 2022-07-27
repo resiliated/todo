@@ -23,11 +23,12 @@ public class TodoController {
     private TodoRepository todoRepository;
 
     @DeleteMapping(path="/{id}")
-    public @ResponseBody void removeTodo(@PathVariable Integer id){
+    public @ResponseBody String removeTodo(@PathVariable Integer id){
         todoRepository.findById(id).map(todo -> {
             todo.setDeleted(true);
             return todoRepository.save(todo);
         });
+        return "Todo deleted";
     }
 
     @PutMapping
