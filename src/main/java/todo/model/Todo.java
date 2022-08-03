@@ -8,7 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity // This tells Hibernate to make a table out of this class
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,15 +22,11 @@ public class Todo {
 
         @CreatedDate
         private Date creation = new Date();
-
         private Date close;
 
         @Enumerated(EnumType.STRING)
         private State state = State.TODO;
-
-        @OneToOne(cascade = CascadeType.ALL)
-        @JoinColumn(name = "type_id", referencedColumnName = "id")
-        private Type type;
-
+        private Integer typeId;
+        private Integer userId;
         private boolean deleted = false;
 }
